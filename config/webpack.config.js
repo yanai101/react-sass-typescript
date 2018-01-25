@@ -8,7 +8,7 @@ const NamedPlugin = webpack.NamedModulesPlugin;
 
 module.exports = (env = {}) => {
   // Use your env variables here
-  return { objectGoesHere };
+  return {objectGoesHere};
 };
 
 // paths
@@ -17,18 +17,17 @@ const buildPath = path.join(projectPath, "build");
 const srcPath = path.join(projectPath, "src");
 const appPath = path.join(srcPath, "app");
 
-// Webpack uses `publicPath` to determine where the app is being served from.
-// In development, we always serve from the root. This makes config easier.
+// Webpack uses `publicPath` to determine where the app is being served from. In
+// development, we always serve from the root. This makes config easier.
 const publicPath = "";
-// `publicUrl` is just like `publicPath`, but we will provide it to our app
-// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
-// Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
+// `publicUrl` is just like `publicPath`, but we will provide it to our app as
+// %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript. Omit
+// trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 const publicUrl = "";
 
 module.exports = env => {
-  // Use env.<YOUR VARIABLE> here:
-  // console.log("NODE_ENV: ", env.NODE_ENV); // 'local'
-  // console.log("is Production: ", env.production);
+  // Use env.<YOUR VARIABLE> here: console.log("NODE_ENV: ", env.NODE_ENV); //
+  // 'local' console.log("is Production: ", env.production);
 
   const isProd = env && env.production ? true : false;
   const cssDev = ["style-loader", "css-loader", "sass-loader"];
@@ -47,8 +46,22 @@ module.exports = env => {
     ]
   });
 
-  const cssConfig = isProd ? cssProd : cssDev;
-  const sourceMapConfig = isProd ? "" : "source-map";
+  const minifyProd =  {
+    removeComments: true,
+    collapseWhitespace: true,
+    removeRedundantAttributes: true,
+    useShortDoctype: true,
+    removeEmptyAttributes: true,
+    removeStyleLinkTypeAttributes: true,
+    keepClosingSlash: true,
+    minifyJS: true,
+    minifyCSS: true,
+    minifyURLs: true
+  };
+
+  const cssConfig = isProd? cssProd : cssDev;
+  const sourceMapConfig = isProd ? "": "source-map";
+   const htmlMinityConfilg = isProd ?   minifyProd : {};
 
   return {
     entry: "./src/index.tsx",
@@ -63,40 +76,41 @@ module.exports = env => {
         {
           test: /\.tsx?$/,
           use: "awesome-typescript-loader"
-        },
-        {
+        }, {
           enforce: "pre",
           test: /\.js$/,
           use: "source-map-loader"
-        },
-        {
+        }, {
           test: /\.css$/,
           use: ["style-loader", "css-loader"]
-        },
-        {
+        }, {
           test: /\.scss$/,
           use: cssConfig
-        },
-        {
+        }, {
           test: /\.(png|jpe?g|gif|svg)$/,
           include: projectPath,
           use: ["url-loader?name=images/[name].[ext]", "image-webpack-loader?bypassOnDebug"]
-        },
-        {
+        }, {
           test: /\.(woff2?)$/,
           use: "url-loader?limit=10000&name=fonts/[name].[ext]"
-        },
-        { test: /\.(ttf|eot)$/, use: "file-loader?name=fonts/[name].[ext]" }
+        }, {
+          test: /\.(ttf|eot)$/,
+          use: "file-loader?name=fonts/[name].[ext]"
+        }
       ]
     },
     plugins: [
       new InterpolateHtmlPlugin({
         PUBLIC_URL: publicUrl
-        // You can pass any key-value pairs, this was just an example.
-        // WHATEVER: 42 will replace %WHATEVER% with 42 in index.html.
+        // You can pass any key-value pairs, this was just an example. WHATEVER: 42 will
+        // replace %WHATEVER% with 42 in index.html.
       }),
 
-      new HtmlWebpackPlugin({ template: "./index.html", hash: true }),
+      new HtmlWebpackPlugin({
+        template: "./index.html",
+        hash: true,
+        minify: htmlMinityConfilg
+      }),
       new Hot(),
       new NamedPlugin(),
       new ExtractTextPlugin({
@@ -108,7 +122,9 @@ module.exports = env => {
     devtool: sourceMapConfig,
     devServer: {
       contentBase: buildPath,
-      historyApiFallback: { disableDotRule: true },
+      historyApiFallback: {
+        disableDotRule: true
+      },
       compress: true,
       hot: true,
       open: true,
