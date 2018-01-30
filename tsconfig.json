@@ -10,7 +10,7 @@
     "moduleResolution": "node"
   },
   "files": [
-    "./config/typescript.config.ts"
+    "./config/typescript.config.d.ts"
   ],
   "include": [
     "src/**/*"
