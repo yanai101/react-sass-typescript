@@ -4,7 +4,7 @@ Hi! this is a boilerplate for react app with typescript and scss - you can confi
 
 
 # Files
-the typescript.config.js file - is for typescript - for scss modules - otherwise if you import something like that : 
+the typescript.config.d.js file - is for typescript - for scss modules - otherwise if you import something like that : 
 ```javascript
 import cls from './app.scss' 
 ```
