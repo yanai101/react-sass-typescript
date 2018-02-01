@@ -1,4 +1,4 @@
-# react-scss-typescrip!
+# react-scss-typescript!
 
 Hi! this is a boilerplate for react app with typescript and scss - you can config in the webpack if you what to use scss nodule or not...
 
