@@ -7,7 +7,8 @@
     "noImplicitAny": true,
     "target": "es5",
     "module": "es6",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowJs": true
   },
   "files": [
     "./config/typescript.config.d.ts"

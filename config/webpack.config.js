@@ -97,6 +97,20 @@ module.exports = env => {
           use: "awesome-typescript-loader"
         },
         {
+            use: [
+                {
+                    loader: 'awesome-typescript-loader',
+                    options: {
+                        transpileOnly: true, // Note, this means you ignore errors.// Due to legacy, we ignore errors in TypeScript files too, DON'T DO THIS FOR TS FILES
+                        useCache: true,
+                        configFileName: process.env.TS_CONFIG_CODE || 'tsconfig.json'
+                    }
+                }
+            ],
+            exclude: /(node_modules|bower_components)/,
+            test: /((\.jsx?)|(\.js))$/
+        },
+        {
           enforce: "pre",
           test: /\.js$/,
           use: "source-map-loader"
@@ -146,7 +160,7 @@ module.exports = env => {
       new NamedPlugin(),
       new ExtractTextPlugin({
         filename: "style.css",
-        // disable: !isProd,
+        disable: !isProd,
         allChunks: true
       })
     ],

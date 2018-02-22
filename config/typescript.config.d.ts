@@ -39,3 +39,10 @@ declare module '*.svg' {
     const content: string;
     export default content;
 }
+
+// allow import of svg images
+// since we use "url-loader" plugin, the content type is simply a string (url)
+declare module '*.jsx' {
+    const content: string;
+    export default content;
+}
