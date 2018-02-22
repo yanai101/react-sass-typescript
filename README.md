@@ -28,5 +28,7 @@ and in the app.scss
 	color:red
 }
 ```
+to run the example app...
+
 just run mpn\yarn install and start ... 
 enjoy!
